@@ -1,0 +1,134 @@
+/* Герой-секция */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 80px 5%;
+    position: relative;
+}
+
+.hero-content {
+    align-self: center;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--gradient-main);
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Анимация аудио-визуализации */
+.audio-visualization {
+    width: 100%;
+    height: 400px;
+    background: var(--bg-secondary);
+    border-radius: 20px;
+    position: relative;
+}
+
+/* Секция релизов */
+.releases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 40px 5%;
+}
+
+.release-card {
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.release-card:hover {
+    transform: translateY(-10px);
+}
+
+.release-artwork {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.play-button {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0,0,0,0.7);
+    border: 2px solid var(--neon-cyan);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Карусель артистов */
+.artists-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 40px 5%;
+    gap: 30px;
+}
+
+.artist-card {
+    scroll-snap-align: start;
+    flex: 0 0 300px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.artist-card img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.artist-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .hero h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .releases-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .artist-card {
+        flex: 0 0 250px;
+    }
+  }
