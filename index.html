@@ -3,195 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEDIAHOLDING - Главная</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <title>NOVA | Next-Gen Music Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/preloader.css">
 </head>
 <body>
     <!-- Прелоадер -->
     <div class="preloader">
-        <div class="preloader__percent">0%</div>
-        <div class="preloader__text">Инициализация платформы</div>
-        <div class="preloader__progress"></div>
+        <div class="loader-digit">0%</div>
+        <div class="loader-text">ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ</div>
+        <div class="loader-progress"></div>
     </div>
 
-    <!-- Шапка -->
+    <!-- Навигация -->
     <header class="header">
-        <div class="container">
-            <nav class="header__nav">
-                <a href="index.html" class="logo">
-                    <span class="logo__gradient">MEDIA</span>HOLDING
-                </a>
-                
-                <div class="header__menu">
-                    <a href="index.html" class="header__link active">Главная</a>
-                    <a href="catalog.html" class="header__link">Каталог</a>
-                    <a href="radio.html" class="header__link">Радио</a>
-                    <a href="artists.html" class="header__link">Артисты</a>
-                    <a href="tariffs.html" class="header__link">Тарифы</a>
-                    <a href="contacts.html" class="header__link">Контакты</a>
+        <nav class="container">
+            <div class="nav__inner">
+                <div class="logo">NOVA</div>
+                <div class="nav__links">
+                    <a href="#home" class="nav__link active">Главная</a>
+                    <a href="#artists" class="nav__link">Артисты</a>
+                    <a href="#releases" class="nav__link">Релизы</a>
+                    <a href="#partners" class="nav__link">Партнёры</a>
+                    <a href="#contact" class="nav__link">Контакты</a>
                 </div>
-            </nav>
-        </div>
+            </div>
+        </nav>
     </header>
 
     <!-- Герой-секция -->
-    <section class="hero">
-        <div class="hero__blur"></div>
+    <section class="hero" id="home">
         <div class="container">
-            <div class="hero__content animate-on-scroll">
-                <h1 class="hero__title">
-                    Твой звук<br>
-                    <span class="hero__title-gradient">на вершинах</span>
-                </h1>
-                <p class="hero__subtitle">
-                    Профессиональная платформа для музыкантов нового поколения
-                </p>
-                <div class="hero__buttons">
-                    <a href="#form" class="btn btn--primary">Отправить заявку</a>
-                    <a href="catalog.html" class="btn btn--secondary">Посмотреть каталог</a>
+            <div class="hero__content">
+                <h1 data-aos="fade-up">ЗВУК<br><span class="gradient-text">БУДУЩЕГО</span></h1>
+                <p class="hero__subtitle" data-aos="fade-up" data-aos-delay="200">Платформа нового поколения для артистов и лейблов</p>
+                <div class="hero__cta" data-aos="fade-up" data-aos-delay="400">
+                    <button class="btn btn--primary">Отправить заявку</button>
+                    <button class="btn btn--secondary">Каталог артистов</button>
+                </div>
+            </div>
+        </div>
+        <div class="hero__gradient"></div>
+    </section>
+
+    <!-- Партнёры -->
+    <section class="partners" id="partners">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Наши партнёры</h2>
+            <div class="partners-grid">
+                <div class="partner-card" data-aos="zoom-in">
+                    <img src="images/partners/sberbusiness.svg" alt="СберБизнес">
+                </div>
+                <div class="partner-card" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="images/partners/smw.svg" alt="SMW">
+                </div>
+                <div class="partner-card" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="images/partners/mf.svg" alt="MF">
+                </div>
+                <div class="partner-card" data-aos="zoom-in" data-aos-delay="300">
+                    <img src="images/partners/vk-music.svg" alt="VK Музыка">
+                </div>
+                <div class="partner-card" data-aos="zoom-in" data-aos-delay="400">
+                    <img src="images/partners/yandex-music.svg" alt="Яндекс Музыка">
+                </div>
+                <div class="partner-card" data-aos="zoom-in" data-aos-delay="500">
+                    <img src="images/partners/bandlink.svg" alt="Band.link">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Преимущества -->
-    <section class="advantages">
+    <!-- Контакты -->
+    <section class="contact" id="contact">
         <div class="container">
-            <h2 class="section-title animate-on-scroll">Наши преимущества</h2>
-            <div class="advantages__grid">
-                <div class="advantage card animate-on-scroll">
-                    <div class="advantage__icon">🎯</div>
-                    <h3 class="advantage__title">Точечное продвижение</h3>
-                    <p class="advantage__text">Используем Big Data для анализа аудитории</p>
-                </div>
-                
-                <div class="advantage card animate-on-scroll">
-                    <div class="advantage__icon">💎</div>
-                    <h3 class="advantage__title">Эксклюзивный контент</h3>
-                    <p class="advantage__text">Доступ к закрытым мастер-классам</p>
-                </div>
-                
-                <div class="advantage card animate-on-scroll">
-                    <div class="advantage__icon">🌍</div>
-                    <h3 class="advantage__title">Глобальный охват</h3>
-                    <p class="advantage__text">Продвижение на 35+ платформах</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Партнеры -->
-    <section class="partners">
-        <div class="container">
-            <h2 class="section-title animate-on-scroll">Наши партнеры</h2>
-            <div class="partners__grid animate-on-scroll">
-                <img src="images/partners/logo1.svg" alt="Spotify" class="partners__logo">
-                <img src="images/partners/logo2.svg" alt="Apple Music" class="partners__logo">
-                <img src="images/partners/logo3.svg" alt="YouTube Music" class="partners__logo">
-                <img src="images/partners/logo4.svg" alt="SoundCloud" class="partners__logo">
-                <img src="images/partners/logo5.svg" alt="Tidal" class="partners__logo">
-            </div>
-        </div>
-    </section>
-
-    <!-- Тарифы -->
-    <section class="tariffs">
-        <div class="container">
-            <h2 class="section-title animate-on-scroll">Тарифные планы</h2>
-            
-            <div class="tariff-switcher animate-on-scroll">
-                <button class="tariff-switcher__btn active" data-target="subscription">Абонементы</button>
-                <button class="tariff-switcher__btn" data-target="tariffs">Пакеты</button>
-            </div>
-
-            <div class="tariff-content active" id="subscription">
-                <div class="tariff-cards">
-                    <div class="tariff-card card animate-on-scroll">
-                        <h3 class="tariff-card__title">Фри Артист</h3>
-                        <div class="tariff-card__price">Бесплатно</div>
-                        <ul class="tariff-card__features">
-                            <li>Базовое продвижение</li>
-                            <li>3 релиза в месяц</li>
-                            <li>Аналитика базового уровня</li>
-                        </ul>
-                        <button class="btn btn--primary">Выбрать</button>
-                    </div>
-                    
-                    <div class="tariff-card card animate-on-scroll">
-                        <h3 class="tariff-card__title">Фри Лейбл</h3>
-                        <div class="tariff-card__price">$99<span>/мес</span></div>
-                        <ul class="tariff-card__features">
-                            <li>Приоритетная поддержка</li>
-                            <li>Неограниченные релизы</li>
-                            <li>Расширенная аналитика</li>
-                        </ul>
-                        <button class="btn btn--primary">Выбрать</button>
-                    </div>
-                    
-                    <div class="tariff-card card animate-on-scroll">
-                        <h3 class="tariff-card__title">Платный</h3>
-                        <div class="tariff-card__price">$299<span>/мес</span></div>
-                        <ul class="tariff-card__features">
-                            <li>Персональный менеджер</li>
-                            <li>Эксклюзивные промо-каналы</li>
-                            <li>Премиум аналитика</li>
-                        </ul>
-                        <button class="btn btn--primary">Выбрать</button>
+            <div class="contact__grid">
+                <div class="contact__info" data-aos="fade-right">
+                    <h2>Свяжитесь с нами</h2>
+                    <p>info@novalabel.com<br>+7 (495) 123-45-67</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon telegram"></a>
+                        <a href="#" class="social-icon vk"></a>
+                        <a href="#" class="social-icon youtube"></a>
                     </div>
                 </div>
+                <form class="contact__form" data-aos="fade-left">
+                    <input type="text" placeholder="Ваше имя">
+                    <input type="email" placeholder="E-mail">
+                    <textarea placeholder="Сообщение"></textarea>
+                    <button class="btn btn--primary">Отправить</button>
+                </form>
             </div>
         </div>
     </section>
 
-    <!-- Подвал -->
+    <!-- Футер -->
     <footer class="footer">
         <div class="container">
-            <div class="footer__grid">
-                <div class="footer__col">
-                    <h3 class="footer__title">MEDIAHOLDING</h3>
-                    <p class="footer__text">Инновационный музыкальный лейбл нового поколения</p>
+            <div class="footer__content">
+                <div class="footer__logo">NOVA</div>
+                <div class="footer__nav">
+                    <a href="#home" class="footer__link">Главная</a>
+                    <a href="#artists" class="footer__link">Артисты</a>
+                    <a href="#releases" class="footer__link">Релизы</a>
+                    <a href="#partners" class="footer__link">Партнёры</a>
                 </div>
-                
-                <div class="footer__col">
-                    <h3 class="footer__title">Навигация</h3>
-                    <ul class="footer__links">
-                        <li><a href="artists.html">Артисты</a></li>
-                        <li><a href="catalog.html">Каталог</a></li>
-                        <li><a href="radio.html">Радио</a></li>
-                        <li><a href="tariffs.html">Тарифы</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer__col">
-                    <h3 class="footer__title">Контакты</h3>
-                    <ul class="footer__contacts">
-                        <li><a href="mailto:info@mediaholding.com">info@mediaholding.com</a></li>
-                        <li><a href="tel:+74951234567">+7 (495) 123-45-67</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer__col">
-                    <h3 class="footer__title">Соцсети</h3>
-                    <div class="footer__social">
-                        <a href="#" class="social-icon instagram"></a>
-                        <a href="#" class="social-icon youtube"></a>
-                        <a href="#" class="social-icon spotify"></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer__copyright">
-                © 2023 MEDIAHOLDING. Все права защищены
+                <div class="footer__copy">&copy; 2023 NOVA Music. All rights reserved</div>
             </div>
         </div>
     </footer>
 
     <!-- Скрипты -->
     <script src="js/preloader.js"></script>
+    <script src="js/aos.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/gallery.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'ease-in-out-quart'
+        });
+    </script>
 </body>
-</html>
+    </html>
