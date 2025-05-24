@@ -75,43 +75,34 @@
 
     <!-- Компонентный загрузчик -->
     <script type="module">
-        // Функция загрузки компонентов
-        const loadComponent = async (containerId, path) => {
-            try {
-                const response = await fetch(path);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                
-                const html = await response.text();
-                const container = document.getElementById(containerId);
-                container.innerHTML = html;
-                
-                // Загрузка зависимостей
-                if(path.includes('preloader')) {
-                    await import('/js/core/preloader.js');
-                }
-            } catch (error) {
-                console.error(`Error loading ${path}:`, error);
-                document.getElementById(containerId).innerHTML = `
-                    <div class="error">Component load error: ${error.message}</div>
-                `;
-            }
-        };
+  import { Preloader } from '/js/core/preloader.js';
+  
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const preloader = new Preloader();
+      await preloader.init();
+      
+      // Загружаем остальные компоненты
+      await Promise.all([
+        fetch('/shared/header.html').then(r => r.text()).then(html => {
+          document.getElementById('header-container').innerHTML = html;
+        }),
+        fetch('/shared/footer.html').then(r => r.text()).then(html => {
+          document.getElementById('footer-container').innerHTML = html;
+        })
+      ]);
 
-        // Последовательная загрузка компонентов
-        window.addEventListener('DOMContentLoaded', async () => {
-            try {
-                await loadComponent('preloader-container', '/shared/loader/preloader.html');
-                await loadComponent('header-container', '/shared/header.html');
-                await loadComponent('footer-container', '/shared/footer.html');
-                
-                // Инициализация приложения
-                const { initializeApp } = await import('/js/main.js');
-                initializeApp();
-            } catch (error) {
-                console.error('Initialization error:', error);
-            }
-        });
-    </script>
+      // Инициализация других модулей
+      import('/js/main.js').then(module => {
+        module.initializeApp();
+      });
+      
+    } catch (error) {
+      console.error('Fatal error:', error);
+      document.body.innerHTML = '<h1>Ошибка загрузки</h1>';
+    }
+  });
+      </script>
 
     <!-- Основные скрипты -->
     <script src="/js/main.js" type="module"></script>
