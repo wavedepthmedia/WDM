@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoiseWave - Современный музыкальный лейбл</title>
+    <title>WDM- Современный музыкальный лейбл</title>
     <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body>
-    <!-- Контейнеры для компонентов -->
+    <!-- Прелоадер -->
     <div id="preloader-container"></div>
+
+    <!-- Шапка -->
     <div id="header-container"></div>
 
     <main class="main-content">
@@ -41,9 +43,10 @@
                         <img data-src="/assets/images/releases/cover1.jpg" alt="Новый релиз" class="lazy">
                         <button class="play-button"></button>
                     </div>
-                    <h3 class="release-title">Название трека</h3>
-                    <p class="release-artist">Исполнитель</p>
+                    <h3 class="release-title">Digital Dreams</h3>
+                    <p class="release-artist">Neon Synth</p>
                 </article>
+                <!-- Добавьте больше релизов -->
             </div>
         </section>
 
@@ -71,41 +74,58 @@
         </section>
     </main>
 
+    <!-- Подвал -->
     <div id="footer-container"></div>
 
-    <!-- Компонентный загрузчик -->
+    <!-- Скрипты -->
     <script type="module">
-  import { Preloader } from '/js/core/preloader.js';
-  
-  document.addEventListener('DOMContentLoaded', async () => {
-    try {
-      const preloader = new Preloader();
-      await preloader.init();
-      
-      // Загружаем остальные компоненты
-      await Promise.all([
-        fetch('/shared/header.html').then(r => r.text()).then(html => {
-          document.getElementById('header-container').innerHTML = html;
-        }),
-        fetch('/shared/footer.html').then(r => r.text()).then(html => {
-          document.getElementById('footer-container').innerHTML = html;
-        })
-      ]);
+        // Динамическая загрузка компонентов
+        async function loadComponent(containerId, path) {
+            try {
+                const response = await fetch(path);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading ${path}:`, error);
+            }
+        }
 
-      // Инициализация других модулей
-      import('/js/main.js').then(module => {
-        module.initializeApp();
-      });
-      
-    } catch (error) {
-      console.error('Fatal error:', error);
-      document.body.innerHTML = '<h1>Ошибка загрузки</h1>';
-    }
-  });
-      </script>
+        // Инициализация приложения
+        async function initializeApp() {
+            try {
+                // Сначала загружаем прелоадер
+                await loadComponent('preloader-container', '/shared/loader/preloader.html');
+                
+                // Инициализируем прелоадер
+                const { Preloader } = await import('/js/core/preloader.js');
+                const preloader = new Preloader();
+                
+                // Запускаем процесс загрузки
+                await preloader.init();
 
-    <!-- Основные скрипты -->
-    <script src="/js/main.js" type="module"></script>
-    <script src="/js/modules/lazy-load.js" defer></script>
+                // Загружаем остальные компоненты
+                await Promise.all([
+                    loadComponent('header-container', '/shared/header.html'),
+                    loadComponent('footer-container', '/shared/footer.html')
+                ]);
+
+                // Инициализация других модулей
+                import('/js/modules/lazy-load.js').then(({ LazyLoader }) => {
+                    new LazyLoader();
+                });
+
+                import('/js/core/mobile-menu.js').then(({ MobileMenu }) => {
+                    new MobileMenu();
+                });
+
+            } catch (error) {
+                console.error('Initialization error:', error);
+            }
+        }
+
+        // Запуск приложения
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
 </body>
-    </html>
+</html>
