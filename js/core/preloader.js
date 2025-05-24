@@ -1,43 +1,64 @@
-
 export class Preloader {
   constructor() {
     this.preloader = document.querySelector('.preloader');
-    this.progressFill = document.querySelector('.progress-fill');
+    this.progressBar = document.querySelector('.progress-fill');
     this.percentDisplay = document.querySelector('.loading-percent');
     this.statusDisplay = document.querySelector('.loading-status');
+    
     this.phrases = [
-      'Загрузка аудио-движка...',
-      'Инициализация DSP-эффектов...',
-      'Подключение к стриминговому серверу...',
-      'Кэширование медиа-контента...'
+      'Инициализация аудио системы...',
+      'Загрузка графических ресурсов...',
+      'Подключение к базе данных...',
+      'Оптимизация производительности...'
     ];
   }
 
-  async load() {
+  loadResources() {
     return new Promise((resolve) => {
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += Math.random() * (15 - 5) + 5;
-        if(progress >= 100) {
-          progress = 100;
-          clearInterval(interval);
-          setTimeout(resolve, 500);
-        }
-        this.#updateProgress(progress);
-      }, 300);
+      const resources = [
+        '/shared/header.html',
+        '/shared/footer.html',
+        '/css/main.css',
+        '/assets/images/logo.svg'
+      ];
+
+      let loaded = 0;
+      const total = resources.length;
+
+      resources.forEach(url => {
+        fetch(url)
+          .then(() => {
+            loaded++;
+            this.updateProgress((loaded/total)*100);
+            if(loaded === total) resolve();
+          })
+          .catch(() => {
+            loaded++;
+            if(loaded === total) resolve();
+          });
+      });
     });
   }
 
-  #updateProgress(percent) {
-    const currentPhrase = this.phrases[Math.floor(percent / 25)];
+  updateProgress(percent) {
+    const currentPhrase = this.phrases[Math.floor(percent/25)];
     this.statusDisplay.textContent = currentPhrase;
-    this.progressFill.style.width = `${percent}%`;
+    this.progressBar.style.width = `${percent}%`;
     this.percentDisplay.textContent = `${Math.floor(percent)}%`;
   }
 
   async init() {
-    await this.load();
-    this.preloader.classList.add('hidden');
-    document.body.style.overflow = 'auto';
+    await this.loadResources();
+    
+    // Добавляем небольшую задержку для плавности
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    this.preloader.classList.add('loaded');
+    document.body.classList.add('loaded');
+    
+    // Удаляем прелоадер из DOM через 1 секунду
+    setTimeout(() => {
+      this.preloader.remove();
+    }, 1000);
   }
-                                     }
+}
