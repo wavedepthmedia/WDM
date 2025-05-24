@@ -9,30 +9,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   opacity: 1;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease 0.5s;
 }
 
-.preloader.hidden {
+.preloader.loaded {
   opacity: 0;
   pointer-events: none;
 }
 
-.loader-content {
-  position: relative;
-  text-align: center;
-}
-
-.loader-animation {
-  width: 200px;
-  height: 80px;
-  filter: drop-shadow(0 0 15px var(--neon-blue));
-}
-
 .progress-container {
-  margin-top: 30px;
+  position: relative;
   width: 300px;
+  margin: 20px auto;
 }
 
 .progress-bar {
@@ -40,30 +29,11 @@
   background: rgba(255,255,255,0.1);
   border-radius: 2px;
   overflow: hidden;
-  position: relative;
 }
 
 .progress-fill {
   height: 100%;
   background: var(--gradient-main);
-  width: 0%;
+  width: 0;
   transition: width 0.3s ease;
-}
-
-.loading-percent {
-  display: block;
-  margin-top: 10px;
-  font-size: 1.2em;
-  color: var(--neon-cyan);
-  font-family: 'Oxanium', monospace;
-}
-
-.loading-status {
-  position: absolute;
-  bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--text-secondary);
-  font-size: 0.9em;
-  white-space: nowrap;
 }
