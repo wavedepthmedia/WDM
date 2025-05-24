@@ -36,3 +36,17 @@ window.addEventListener('load', () => {
   // Анимации после полной загрузки
   document.body.classList.add('loaded');
 });
+export function initializeApp() {
+  // Инициализация прелоадера
+  const preloader = new Preloader();
+  preloader.init().then(() => {
+    // Инициализация остальных модулей после загрузки
+    import('./core/mobile-menu.js').then(({ MobileMenu }) => {
+      new MobileMenu();
+    });
+
+    import('./modules/partners-carousel.js').then(({ PartnersCarousel }) => {
+      new PartnersCarousel('.partners-grid');
+    });
+  });
+                                         }
