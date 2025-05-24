@@ -1,19 +1,58 @@
+<!-- shared/loader/preloader.html -->
 <div class="preloader">
-  <div class="loader-content">
-    <!-- SVG анимация -->
-    <img src="/assets/images/loader/audio-wave.svg" 
-         alt="Loading..." 
-         class="loader-animation">
-         
-    <!-- Прогресс-бар -->
-    <div class="progress-container">
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
-      </div>
-      <span class="loading-percent">0%</span>
+  <div class="preloader__content">
+    <!-- Логотип с анимацией -->
+    <div class="preloader__logo">
+      <svg class="neon-pulse" viewBox="0 0 100 100" width="80" height="80">
+        <path fill="currentColor" d="M50 5L60 30H90L65 45L75 70L50 55L25 70L35 45L10 30H40L50 5Z"/>
+      </svg>
     </div>
-    
+
+    <!-- Прогресс-бар -->
+    <div class="preloader__progress">
+      <div class="progress__track"></div>
+      <div class="progress__bar"></div>
+      <div class="progress__text">0%</div>
+    </div>
+
     <!-- Статус загрузки -->
-    <p class="loading-status">Инициализация аудио системы...</p>
+    <div class="preloader__status">
+      <div class="status__dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <span class="status__text">Инициализация системы...</span>
+    </div>
   </div>
 </div>
+
+<style>
+  /* Анимации */
+  @keyframes neon-pulse {
+    0%, 100% { filter: drop-shadow(0 0 5px #00f3ff); }
+    50% { filter: drop-shadow(0 0 15px #bc13fe); }
+  }
+
+  @keyframes dot-pulse {
+    0%, 80%, 100% { transform: scale(0.5); }
+    40% { transform: scale(1); }
+  }
+
+  .neon-pulse {
+    animation: neon-pulse 1.5s infinite;
+    color: #00f3ff;
+  }
+
+  .status__dots .dot {
+    animation: dot-pulse 1.4s infinite;
+  }
+
+  .status__dots .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .status__dots .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+      </style>
