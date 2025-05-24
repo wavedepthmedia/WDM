@@ -1,52 +1,52 @@
 class Preloader {
     constructor() {
         this.preloader = document.querySelector('.preloader');
-        this.percentElement = document.querySelector('.preloader__percent');
-        this.progressBar = document.querySelector('.preloader__progress');
-        this.minimumDisplayTime = 1500; // Минимальное время показа в ms
+        this.percentElement = document.querySelector('.loader-digit');
+        this.progressBar = document.querySelector('.loader-progress');
+        this.minDisplayTime = 2000;
         this.startTime = Date.now();
-        
         this.init();
     }
 
     init() {
-        this.animateProgress();
-        window.addEventListener('load', () => this.finishLoading());
+        this.setupProgressAnimation();
+        window.addEventListener('load', () => this.handleLoadComplete());
     }
 
-    animateProgress() {
-        let currentPercent = 0;
-        
-        const interval = setInterval(() => {
-            currentPercent += Math.random() * 15;
-            if (currentPercent >= 100) {
-                clearInterval(interval);
-                this.updateProgress(100);
-                return;
+    setupProgressAnimation() {
+        let current = 0;
+        const target = 100;
+        const duration = 2500;
+
+        const update = timestamp => {
+            if (!this.start) this.start = timestamp;
+            const progress = timestamp - this.start;
+            
+            current = Math.min(target, (progress / duration) * target);
+            this.percentElement.textContent = `${Math.floor(current)}%`;
+            this.progressBar.style.width = `${current}%`;
+
+            if (current < target) {
+                requestAnimationFrame(update);
             }
-            this.updateProgress(currentPercent);
-        }, 200);
+        };
+
+        requestAnimationFrame(update);
     }
 
-    updateProgress(percent) {
-        this.percentElement.textContent = `${Math.floor(percent)}%`;
-        this.progressBar.style.width = `${percent}%`;
-    }
-
-    finishLoading() {
-        const elapsedTime = Date.now() - this.startTime;
-        const remainingTime = Math.max(this.minimumDisplayTime - elapsedTime, 0);
+    handleLoadComplete() {
+        const elapsed = Date.now() - this.startTime;
+        const remaining = Math.max(this.minDisplayTime - elapsed, 0);
 
         setTimeout(() => {
-            this.preloader.classList.add('preloader--hidden');
+            this.preloader.style.opacity = '0';
             setTimeout(() => {
-                this.preloader.remove();
+                this.preloader.style.display = 'none';
+                document.body.style.overflow = 'visible';
             }, 1000);
-        }, remainingTime);
+        }, remaining);
     }
 }
 
 // Инициализация
-document.addEventListener('DOMContentLoaded', () => {
-    new Preloader();
-});
+document.addEventListener('DOMContentLoaded', () => new Preloader());
