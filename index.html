@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoiseWave - Современный музыкальный лейбл</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body>
+    <!-- Прелоадер -->
+    {{> shared/loader/preloader }}
+
+    <!-- Шапка -->
+    {{> shared/header }}
+
+    <main class="main-content">
+        <!-- Герой-секция -->
+        <section class="hero neon-border">
+            <div class="hero-content">
+                <h1 class="neon-text">Новая эра в музыке</h1>
+                <p class="hero-subtitle">Откройте звуки будущего с нашими артистами</p>
+                <a href="/catalog" class="cta-button">Смотреть релизы</a>
+            </div>
+            <div class="hero-visual">
+                <div class="audio-visualization"></div>
+            </div>
+        </section>
+
+        <!-- Партнёры -->
+        <section class="partners-section">
+            <h2 class="section-title neon-underline">Наши партнёры</h2>
+            <div class="partners-grid">
+                <!-- Генерация через JS -->
+                <div class="partner-card">
+                    <img src="/assets/images/partners/spotify.svg" alt="Spotify">
+                </div>
+                <div class="partner-card">
+                    <img src="/assets/images/partners/apple-music.svg" alt="Apple Music">
+                </div>
+                <!-- Добавьте остальных партнёров -->
+            </div>
+        </section>
+
+        <!-- Новые релизы -->
+        <section class="releases-section">
+            <h2 class="section-title neon-underline">Последние релизы</h2>
+            <div class="releases-grid">
+                <article class="release-card">
+                    <div class="release-artwork">
+                        <img src="/assets/images/releases/cover1.jpg" alt="Новый релиз">
+                        <button class="play-button"></button>
+                    </div>
+                    <h3 class="release-title">Название трека</h3>
+                    <p class="release-artist">Исполнитель</p>
+                </article>
+                <!-- Повторить карточки -->
+            </div>
+        </section>
+
+        <!-- Артисты -->
+        <section class="artists-preview">
+            <h2 class="section-title neon-underline">Наши артисты</h2>
+            <div class="artists-carousel">
+                <div class="artist-card">
+                    <img src="/assets/images/artists/artist1.jpg" alt="Исполнитель">
+                    <div class="artist-info">
+                        <h3>Псевдоним</h3>
+                        <p>Жанр</p>
+                    </div>
+                </div>
+                <!-- Повторить карточки -->
+            </div>
+            <a href="/artists" class="see-all">Все артисты →</a>
+        </section>
+
+        <!-- CTA Блок -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2 class="cta-title">Скачайте наше приложение</h2>
+                <p>Слушайте эксклюзивный контент и первыми получайте новые релизы</p>
+                <div class="download-buttons">
+                    <a href="#" class="app-store-button"></a>
+                    <a href="#" class="google-play-button"></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    {{> shared/footer }}
+
+    <!-- Скрипты -->
+    <script src="/js/main.js" type="module"></script>
+    <script src="/js/modules/partners-carousel.js"></script>
+    <script src="/js/modules/media-player.js"></script>
+</body>
+                  </html>
