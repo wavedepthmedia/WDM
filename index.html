@@ -9,11 +9,9 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body>
-    <!-- Прелоадер -->
-    {{> shared/loader/preloader }}
-
-    <!-- Шапка -->
-    {{> shared/header }}
+    <!-- Контейнеры для компонентов -->
+    <div id="preloader-container"></div>
+    <div id="header-container"></div>
 
     <main class="main-content">
         <!-- Герой-секция -->
@@ -31,16 +29,7 @@
         <!-- Партнёры -->
         <section class="partners-section">
             <h2 class="section-title neon-underline">Наши партнёры</h2>
-            <div class="partners-grid">
-                <!-- Генерация через JS -->
-                <div class="partner-card">
-                    <img src="/assets/images/partners/spotify.svg" alt="Spotify">
-                </div>
-                <div class="partner-card">
-                    <img src="/assets/images/partners/apple-music.svg" alt="Apple Music">
-                </div>
-                <!-- Добавьте остальных партнёров -->
-            </div>
+            <div class="partners-grid"></div>
         </section>
 
         <!-- Новые релизы -->
@@ -49,29 +38,19 @@
             <div class="releases-grid">
                 <article class="release-card">
                     <div class="release-artwork">
-                        <img src="/assets/images/releases/cover1.jpg" alt="Новый релиз">
+                        <img data-src="/assets/images/releases/cover1.jpg" alt="Новый релиз" class="lazy">
                         <button class="play-button"></button>
                     </div>
                     <h3 class="release-title">Название трека</h3>
                     <p class="release-artist">Исполнитель</p>
                 </article>
-                <!-- Повторить карточки -->
             </div>
         </section>
 
         <!-- Артисты -->
         <section class="artists-preview">
             <h2 class="section-title neon-underline">Наши артисты</h2>
-            <div class="artists-carousel">
-                <div class="artist-card">
-                    <img src="/assets/images/artists/artist1.jpg" alt="Исполнитель">
-                    <div class="artist-info">
-                        <h3>Псевдоним</h3>
-                        <p>Жанр</p>
-                    </div>
-                </div>
-                <!-- Повторить карточки -->
-            </div>
+            <div class="artists-carousel"></div>
             <a href="/artists" class="see-all">Все артисты →</a>
         </section>
 
@@ -81,19 +60,61 @@
                 <h2 class="cta-title">Скачайте наше приложение</h2>
                 <p>Слушайте эксклюзивный контент и первыми получайте новые релизы</p>
                 <div class="download-buttons">
-                    <a href="#" class="app-store-button"></a>
-                    <a href="#" class="google-play-button"></a>
+                    <a href="#" class="app-store-button">
+                        <img data-src="/assets/images/app-store.svg" alt="App Store" class="lazy">
+                    </a>
+                    <a href="#" class="google-play-button">
+                        <img data-src="/assets/images/google-play.svg" alt="Google Play" class="lazy">
+                    </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Подвал -->
-    {{> shared/footer }}
+    <div id="footer-container"></div>
 
-    <!-- Скрипты -->
+    <!-- Компонентный загрузчик -->
+    <script type="module">
+        // Функция загрузки компонентов
+        const loadComponent = async (containerId, path) => {
+            try {
+                const response = await fetch(path);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const html = await response.text();
+                const container = document.getElementById(containerId);
+                container.innerHTML = html;
+                
+                // Загрузка зависимостей
+                if(path.includes('preloader')) {
+                    await import('/js/core/preloader.js');
+                }
+            } catch (error) {
+                console.error(`Error loading ${path}:`, error);
+                document.getElementById(containerId).innerHTML = `
+                    <div class="error">Component load error: ${error.message}</div>
+                `;
+            }
+        };
+
+        // Последовательная загрузка компонентов
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await loadComponent('preloader-container', '/shared/loader/preloader.html');
+                await loadComponent('header-container', '/shared/header.html');
+                await loadComponent('footer-container', '/shared/footer.html');
+                
+                // Инициализация приложения
+                const { initializeApp } = await import('/js/main.js');
+                initializeApp();
+            } catch (error) {
+                console.error('Initialization error:', error);
+            }
+        });
+    </script>
+
+    <!-- Основные скрипты -->
     <script src="/js/main.js" type="module"></script>
-    <script src="/js/modules/partners-carousel.js"></script>
-    <script src="/js/modules/media-player.js"></script>
+    <script src="/js/modules/lazy-load.js" defer></script>
 </body>
-                  </html>
+    </html>
