@@ -2,6 +2,12 @@ import Preloader from './core/preloader.js';
 import MobileMenu from './core/mobile-menu.js';
 import { PartnersCarousel } from './modules/partners-carousel.js';
 import { MediaPlayer } from './modules/media-player.js';
+import { Preloader } from '../js/core/preloader.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const preloader = new Preloader();
+  preloader.init();
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   // Инициализация прелоадера
