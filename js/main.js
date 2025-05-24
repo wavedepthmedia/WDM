@@ -67,3 +67,28 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', animateOnScroll);
     animateOnScroll(); // Инициализация при загрузке
 });
+// Мобильное меню
+const burger = document.querySelector('.burger');
+const body = document.body;
+
+burger.addEventListener('click', () => {
+    body.classList.toggle('menu-open');
+});
+
+// Закрытие меню при клике вне области
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav__links') && 
+        !e.target.closest('.burger') &&
+        body.classList.contains('menu-open')) {
+        body.classList.remove('menu-open');
+    }
+});
+
+// Закрытие меню при клике на ссылку
+document.querySelectorAll('.nav__link').forEach(link => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+            body.classList.remove('menu-open');
+        }
+    });
+});
