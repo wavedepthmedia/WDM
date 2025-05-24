@@ -92,3 +92,34 @@ document.querySelectorAll('.nav__link').forEach(link => {
         }
     });
 });
+
+// Плавный скролл для мобильного меню
+document.querySelectorAll('.nav__link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024) {
+            body.classList.remove('menu-open');
+            
+            // Плавный переход
+            const target = document.querySelector(link.getAttribute('href'));
+            if(target) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Обновление URL без перезагрузки
+                setTimeout(() => {
+                    history.pushState(null, null, link.href);
+                }, 400);
+            }
+        }
+    });
+});
+
+// Закрытие меню при изменении ориентации
+window.addEventListener('orientationchange', () => {
+    if(window.innerWidth > 1024) {
+        body.classList.remove('menu-open');
+    }
+});
