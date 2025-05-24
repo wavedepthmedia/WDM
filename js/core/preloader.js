@@ -1,41 +1,43 @@
-class Preloader {
+
+export class Preloader {
   constructor() {
     this.preloader = document.querySelector('.preloader');
-    this.progressBar = document.querySelector('.progress-fill');
+    this.progressFill = document.querySelector('.progress-fill');
     this.percentDisplay = document.querySelector('.loading-percent');
-    this.loadStatus = 0;
+    this.statusDisplay = document.querySelector('.loading-status');
+    this.phrases = [
+      'Загрузка аудио-движка...',
+      'Инициализация DSP-эффектов...',
+      'Подключение к стриминговому серверу...',
+      'Кэширование медиа-контента...'
+    ];
   }
 
-  simulateLoading() {
+  async load() {
     return new Promise((resolve) => {
+      let progress = 0;
       const interval = setInterval(() => {
-        this.loadStatus += Math.random() * 15;
-        if(this.loadStatus >= 100) {
-          this.loadStatus = 100;
+        progress += Math.random() * (15 - 5) + 5;
+        if(progress >= 100) {
+          progress = 100;
           clearInterval(interval);
-          resolve();
+          setTimeout(resolve, 500);
         }
-        this.updateProgress();
+        this.#updateProgress(progress);
       }, 300);
     });
   }
 
-  updateProgress() {
-    this.progressBar.style.width = `${this.loadStatus}%`;
-    this.percentDisplay.textContent = `${Math.floor(this.loadStatus)}%`;
-  }
-
-  hidePreloader() {
-    this.preloader.style.opacity = '0';
-    setTimeout(() => {
-      this.preloader.style.display = 'none';
-    }, 500);
+  #updateProgress(percent) {
+    const currentPhrase = this.phrases[Math.floor(percent / 25)];
+    this.statusDisplay.textContent = currentPhrase;
+    this.progressFill.style.width = `${percent}%`;
+    this.percentDisplay.textContent = `${Math.floor(percent)}%`;
   }
 
   async init() {
-    await this.simulateLoading();
-    this.hidePreloader();
+    await this.load();
+    this.preloader.classList.add('hidden');
+    document.body.style.overflow = 'auto';
   }
-}
-
-export default Preloader;
+                                     }
