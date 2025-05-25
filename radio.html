@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeonSound Radio</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Прелоадер и хедер как в index.html -->
+ <!-- Прелоадер -->
+  <div class="preloader">
+    <div class="loader"></div>
+    <span class="progress">0%</span>
+  </div>
+
+  <!-- Мобильное меню -->
+  <nav class="mobile-menu">
+    <div class="menu-close">&times;</div>
+    <a href="/">Главная</a>
+    <a href="catalog.html">Каталог</a>
+    <a href="artists.html">Артисты</a>
+    <a href="radio.html">Радио</a>
+    <a href="portfolio.html">Портфолио</a>
+    <a href="about.html">О нас</a>
+  </nav>
+
+  <!-- Хедер -->
+  <header class="main-header">
+    <div class="logo">NeonSound</div>
+    <nav class="desktop-nav">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="artists.html">Артисты</a>
+      <a href="radio.html">Радио</a>
+      <a href="portfolio.html">Портфолио</a>
+      <a href="about.html">О нас</a>
+    </nav>
+    <div class="menu-toggle">☰</div>
+  </header>
+  <main>
+    <div class="page-header">
+      <div class="header-bg" style="background-image: url('images/radio-bg.jpg')"></div>
+      <h1 class="neon-text">NeonSound Radio</h1>
+    </div>
+
+    <div class="section">
+      <div class="radio-player">
+        <div class="live-badge">LIVE</div>
+        <img src="images/radio-cover.jpg" class="radio-cover" alt="Обложка радио">
+        <h2 class="radio-title neon-text">NeonSound Radio</h2>
+        <audio id="radio-stream" src="https://usa13.fastcast4u.com/proxy/wavedepthmedia?mp=/1"></audio>
+        <div class="controls">
+          <button class="play-button"></button>
+          <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="1">
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Футер как в index.html -->
+
+  <script src="js/script.js"></script>
+  <script>
+    // Радио плеер
+    const audio = document.getElementById('radio-stream');
+    const playButton = document.querySelector('.play-button');
+    const volumeSlider = document.querySelector('.volume-slider');
+
+    playButton.addEventListener('click', () => {
+      if(audio.paused) {
+        audio.play();
+        playButton.textContent = '⏸';
+      } else {
+        audio.pause();
+        playButton.textContent = '▶';
+      }
+    });
+
+    volumeSlider.addEventListener('input', (e) => {
+      audio.volume = e.target.value;
+    });
+  </script>
+</body>
+</html>
