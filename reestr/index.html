@@ -3,127 +3,705 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Реестр документов музыкального лейбла</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>MusicLabel Docs | Реестр документов лейбла</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C5CE7;
+            --secondary: #A29BFE;
+            --accent: #FD79A8;
+            --dark: #2D3436;
+            --light: #F5F6FA;
+            --success: #00B894;
+            --warning: #FDCB6E;
+            --danger: #E17055;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: none;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: var(--accent);
+        }
+        
+        /* Document Categories */
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .category-btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Document Sections */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            display: inline-block;
+            background: white;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--secondary);
+            z-index: 0;
+        }
+        
+        .documents-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .document-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .document-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .document-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .document-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .document-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .download-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-word {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-word:hover {
+            background: #5a4bc2;
+        }
+        
+        .btn-pdf {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-pdf:hover {
+            background: #c95c3e;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+            }
+            
+            nav ul li {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .documents-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div class="logo">MusicLabel Registry</div>
-        <nav>
-            <ul>
-                <li><a href="#contracts">Договоры</a></li>
-                <li><a href="#acts">Акты</a></li>
-                <li><a href="#applications">Заявки</a></li>
-                <li><a href="#other">Прочие документы</a></li>
-            </ul>
-        </nav>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-compact-disc"></i>
+                <span>MusicLabel Docs</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#contracts">Договоры</a></li>
+                    <li><a href="#acts">Акты</a></li>
+                    <li><a href="#applications">Заявки</a></li>
+                    <li><a href="#other">Прочие документы</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-
-    <main>
-        <section class="hero">
+    
+    <section class="hero">
+        <div class="container">
             <h1>Реестр документов музыкального лейбла</h1>
-            <p>Доступ к шаблонам всех необходимых документов для работы с артистами</p>
-        </section>
-
-        <section id="contracts" class="documents-section">
-            <h2>Договоры</h2>
+            <p>Доступ ко всем необходимым шаблонам документов для работы с артистами и партнерами</p>
+            <div class="search-box">
+                <input type="text" placeholder="Поиск документов...">
+                <button><i class="fas fa-search"></i> Найти</button>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="categories">
+            <button class="category-btn active">Все документы</button>
+            <button class="category-btn">Договоры</button>
+            <button class="category-btn">Акты</button>
+            <button class="category-btn">Заявки</button>
+            <button class="category-btn">Отчеты</button>
+        </div>
+        
+        <!-- Контракты -->
+        <div class="section-title" id="contracts">
+            <h2><i class="fas fa-file-contract"></i> Договоры</h2>
+        </div>
+        
+        <div class="documents-container">
             <div class="documents-grid">
                 <div class="document-card">
                     <h3>Договор с артистом</h3>
-                    <p>Типовой договор между лейблом и исполнителем</p>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 15.05.2023</span>
+                        <span><i class="far fa-file"></i> Версия 2.1</span>
+                    </div>
+                    <p>Типовой договор между лейблом и исполнителем, включающий все необходимые условия сотрудничества.</p>
                     <div class="download-buttons">
-                        <a href="templates/artist_contract.docx" class="btn word">Скачать Word</a>
-                        <a href="templates/artist_contract.pdf" class="btn pdf">Скачать PDF</a>
+                        <a href="templates/artist_contract.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/artist_contract.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
                     </div>
                 </div>
-
+                
                 <div class="document-card">
                     <h3>Лицензионный договор</h3>
-                    <p>На использование музыкальных произведений</p>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 10.04.2023</span>
+                        <span><i class="far fa-file"></i> Версия 1.4</span>
+                    </div>
+                    <p>На использование музыкальных произведений с указанием всех прав и обязанностей сторон.</p>
                     <div class="download-buttons">
-                        <a href="templates/license_agreement.docx" class="btn word">Скачать Word</a>
-                        <a href="templates/license_agreement.pdf" class="btn pdf">Скачать PDF</a>
+                        <a href="templates/license_agreement.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/license_agreement.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
+                    </div>
+                </div>
+                
+                <div class="document-card">
+                    <h3>Договор с автором текстов</h3>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 22.03.2023</span>
+                        <span><i class="far fa-file"></i> Версия 1.2</span>
+                    </div>
+                    <p>Для сотрудничества с авторами текстов песен и поэтами.</p>
+                    <div class="download-buttons">
+                        <a href="templates/lyricist_contract.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/lyricist_contract.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section id="acts" class="documents-section">
-            <h2>Акты</h2>
+        </div>
+        
+        <!-- Акты -->
+        <div class="section-title" id="acts">
+            <h2><i class="fas fa-clipboard-check"></i> Акты</h2>
+        </div>
+        
+        <div class="documents-container">
             <div class="documents-grid">
                 <div class="document-card">
                     <h3>Акт выполненных работ</h3>
-                    <p>По студийной записи и производству</p>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 05.06.2023</span>
+                        <span><i class="far fa-file"></i> Версия 3.0</span>
+                    </div>
+                    <p>По студийной записи и производству музыкального контента.</p>
                     <div class="download-buttons">
-                        <a href="templates/completion_certificate.docx" class="btn word">Скачать Word</a>
-                        <a href="templates/completion_certificate.pdf" class="btn pdf">Скачать PDF</a>
+                        <a href="templates/completion_certificate.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/completion_certificate.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
                     </div>
                 </div>
-
+                
                 <div class="document-card">
                     <h3>Акт приема-передачи</h3>
-                    <p>Материалов и мастер-записей</p>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 18.05.2023</span>
+                        <span><i class="far fa-file"></i> Версия 2.2</span>
+                    </div>
+                    <p>Материалов и мастер-записей между лейблом и исполнителем.</p>
                     <div class="download-buttons">
-                        <a href="templates/transfer_act.docx" class="btn word">Скачать Word</a>
-                        <a href="templates/transfer_act.pdf" class="btn pdf">Скачать PDF</a>
+                        <a href="templates/transfer_act.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/transfer_act.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section id="applications" class="documents-section">
-            <h2>Заявки</h2>
+        </div>
+        
+        <!-- Заявки -->
+        <div class="section-title" id="applications">
+            <h2><i class="fas fa-edit"></i> Заявки</h2>
+        </div>
+        
+        <div class="documents-container">
             <div class="documents-grid">
                 <div class="document-card">
                     <h3>Заявка на релиз</h3>
-                    <p>Форма для подачи заявки на выпуск релиза</p>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 12.06.2023</span>
+                        <span><i class="far fa-file"></i> Версия 4.1</span>
+                    </div>
+                    <p>Форма для подачи заявки на выпуск музыкального релиза с указанием всех деталей.</p>
                     <div class="download-buttons">
-                        <a href="templates/release_application.docx" class="btn word">Скачать Word</a>
-                        <a href="templates/release_application.pdf" class="btn pdf">Скачать PDF</a>
+                        <a href="templates/release_application.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/release_application.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
                     </div>
                 </div>
-
+                
                 <div class="document-card">
                     <h3>Заявка на маркетинг</h3>
-                    <p>Запрос на маркетинговую поддержку</p>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 28.05.2023</span>
+                        <span><i class="far fa-file"></i> Версия 2.3</span>
+                    </div>
+                    <p>Запрос на маркетинговую поддержку музыкального релиза или артиста.</p>
                     <div class="download-buttons">
-                        <a href="templates/marketing_request.docx" class="btn word">Скачать Word</a>
-                        <a href="templates/marketing_request.pdf" class="btn pdf">Скачать PDF</a>
+                        <a href="templates/marketing_request.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/marketing_request.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
+                    </div>
+                </div>
+                
+                <div class="document-card">
+                    <h3>Заявка на участие в фестивале</h3>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 10.04.2023</span>
+                        <span><i class="far fa-file"></i> Версия 1.5</span>
+                    </div>
+                    <p>Форма для подачи заявки на участие артиста в музыкальном фестивале.</p>
+                    <div class="download-buttons">
+                        <a href="templates/festival_application.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/festival_application.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section id="other" class="documents-section">
-            <h2>Прочие документы</h2>
+        </div>
+        
+        <!-- Прочие документы -->
+        <div class="section-title" id="other">
+            <h2><i class="fas fa-folder-open"></i> Прочие документы</h2>
+        </div>
+        
+        <div class="documents-container">
             <div class="documents-grid">
                 <div class="document-card">
                     <h3>NDA (Соглашение о конфиденциальности)</h3>
-                    <p>Для подписания с потенциальными партнерами</p>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 15.03.2023</span>
+                        <span><i class="far fa-file"></i> Версия 3.2</span>
+                    </div>
+                    <p>Для подписания с потенциальными партнерами перед обсуждением сотрудничества.</p>
                     <div class="download-buttons">
-                        <a href="templates/nda.docx" class="btn word">Скачать Word</a>
-                        <a href="templates/nda.pdf" class="btn pdf">Скачать PDF</a>
+                        <a href="templates/nda.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/nda.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
                     </div>
                 </div>
-
+                
                 <div class="document-card">
                     <h3>Роялти-отчет</h3>
-                    <p>Шаблон отчета о выплатах роялти</p>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 01.06.2023</span>
+                        <span><i class="far fa-file"></i> Версия 5.0</span>
+                    </div>
+                    <p>Шаблон отчета о выплатах роялти артистам и авторам.</p>
                     <div class="download-buttons">
-                        <a href="templates/royalty_report.docx" class="btn word">Скачать Word</a>
-                        <a href="templates/royalty_report.pdf" class="btn pdf">Скачать PDF</a>
+                        <a href="templates/royalty_report.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/royalty_report.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
+                    </div>
+                </div>
+                
+                <div class="document-card">
+                    <h3>Медиакит артиста</h3>
+                    <div class="document-meta">
+                        <span><i class="far fa-calendar-alt"></i> Последнее обновление: 20.05.2023</span>
+                        <span><i class="far fa-file"></i> Версия 2.4</span>
+                    </div>
+                    <p>Шаблон для создания медиакита артиста с биографией, фото и другой информацией.</p>
+                    <div class="download-buttons">
+                        <a href="templates/media_kit.docx" class="btn btn-word"><i class="fab fa-microsoft"></i> Скачать Word</a>
+                        <a href="templates/media_kit.pdf" class="btn btn-pdf"><i class="far fa-file-pdf"></i> Скачать PDF</a>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-
+        </div>
+    </div>
+    
     <footer>
-        <div class="footer-content">
-            <p>© 2025 Wave Depth Media. Все права защищены.</p>
-            <p>По вопросам обращайтесь: wavedepthmedia@mail.ru</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>MusicLabel Docs</h3>
+                    <p>Полный набор документов для управления музыкальным лейблом и работы с артистами.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Документы</h3>
+                    <ul>
+                        <li><a href="#contracts">Договоры</a></li>
+                        <li><a href="#acts">Акты</a></li>
+                        <li><a href="#applications">Заявки</a></li>
+                        <li><a href="#other">Прочие документы</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Поддержка</h3>
+                    <ul>
+                        <li><a href="#">Частые вопросы</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                        <li><a href="#">Условия использования</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Музыкальная, 15</li>
+                        <li><i class="fas fa-phone"></i> +7 (495) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> legal@musiclabel.example.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 MusicLabel Docs. Все права защищены.</p>
+            </div>
         </div>
     </footer>
+    
+    <script>
+        // Анимация при прокрутке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Плавная прокрутка
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Фильтрация документов
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Здесь можно добавить логику фильтрации
+                    console.log('Фильтр: ' + this.textContent);
+                });
+            });
+            
+            // Анимация карточек при появлении
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.document-card').forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
-  </html>
+                            </html>
